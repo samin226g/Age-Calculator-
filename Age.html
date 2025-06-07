@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Age Calculator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: #0d0d0d;
+      color: #0ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .box {
+      padding: 25px;
+      background: #1a1a1a;
+      border: 2px solid #0ff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #0ff;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+    h2 {
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    select, button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+      background: #000;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 5px;
+      width: 30%;
+    }
+    button {
+      background: #0ff;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>🕹️ Gamer Age Calculator</h2>
+    <select id="day"></select>
+    <select id="month"></select>
+    <select id="year"></select><br>
+    <button onclick="calcAge()">🔥 Calculate</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const day = document.getElementById("day");
+    const month = document.getElementById("month");
+    const year = document.getElementById("year");
+
+    for (let i = 1; i <= 31; i++) {
+      day.innerHTML += `<option>${i}</option>`;
+    }
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    months.forEach((m, i) => {
+      month.innerHTML += `<option value="${i}">${m}</option>`;
+    });
+    for (let i = new Date().getFullYear(); i >= 1900; i--) {
+      year.innerHTML += `<option>${i}</option>`;
+    }
+
+    function calcAge() {
+      const d = +day.value, m = +month.value, y = +year.value;
+      const dob = new Date(y, m, d);
+      const now = new Date();
+
+      let ageMs = now - dob;
+      const sec = Math.floor(ageMs / 1000);
+      const min = Math.floor(sec / 60);
+      const hr = Math.floor(min / 60);
+      const dayAll = Math.floor(hr / 24);
+      const week = Math.floor(dayAll / 7);
+      const month = Math.floor(dayAll / 30.44);
+      const year = Math.floor(dayAll / 365.25);
+
+      document.getElementById("result").innerHTML = `
+        🎯 <strong>${year}</strong> Years<br>
+        📅 <strong>${month}</strong> Months<br>
+        🗓️ <strong>${week}</strong> Weeks<br>
+        📆 <strong>${dayAll}</strong> Days<br>
+        ⏰ <strong>${hr}</strong> Hours<br>
+        🕒 <strong>${min}</strong> Minutes<br>
+        ⏱️ <strong>${sec}</strong> Seconds
+      `;
+    }
+  </script>
+</body>
+</html>
